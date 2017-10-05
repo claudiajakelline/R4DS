@@ -6,8 +6,133 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+
+# 3.2.4
+# Questão 1
+
+ggplot(data = mpg)
+
 ```
+
+Abre uma janela vazia de gráfico.
+
+```{r setup, include=FALSE}
+
+# 3.2.4
+# Questão 2
+
+mpg
+
+```
+
+234 linhas e 11 colunas
+
+```{r setup, include=FALSE}
+
+# 3.2.4
+# Questão 3
+
+?mpg
+
+```
+
+A variável 'drv' representa a categoria dos carros
+f = tração nas rodas dianteiras, r = tração nas rodas traseiras, 4 = tração nas quatro rodas
+
+```{r setup, include=FALSE}
+
+# 3.2.4
+# Questão 4
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = hwy, y = cyl))
+
+```
+
+```{r setup, include=FALSE}
+# 3.2.4
+# Questão 5
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = class, y = drv))
+```
+
+Ele faz um gráfico de dispersão de duas variáveis categóricas. Não é usual porque não é possível de verificar algum tipo de relação entre duas variáveis categóricas.
+
+```{r setup, include=FALSE}
+# 3.3.1
+# Questão 1
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy, color = "blue"))
+
+```
+
+Porque 'color' é um argumento do 'geom_point', não do 'aes'.
+
+```{r setup, include=FALSE}
+# 3.3.1
+# Questão 2
+
+mpg
+
+```
+
+Variáveis categóricas: manufacturer, model, trans,  drv, fl, class
+Variáveis contínuas: displ, year, cyl, cty, hwy
+Sim, é possível chegar a essa conclusão rodando apenas 'mpg'. No entanto, é mais fácil visualizar pela função 'str'.
+
+```{r setup, include=FALSE}
+# 3.3.1
+# Questões 3 e 4
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy), color = "blue")
+
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, size = class))
+
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy, shape = class))
+
+```
+
+O uso do aesthetic 'color' para a variável contínua não apresentou mensagem de erro nem advertência. Já 'size' apresentou mensagem de avertência, informando que não é aconselhável seu uso para variáveis discretas. E o 'shape' apresentou mensagem de advertência, informando a quantidade ideal de "formas"/categorias que a variável deve ter é seis. Ou seja, este argumento só deve ser utilizado se a variável for categórica. Desta forma, podemos concluir que os diferentes aesthetics depende do tipo da variável.
+
+```{r setup, include=FALSE}
+# 3.3.1
+# Questão 5
+
+?geom_point
+
+```
+
+Pelo que pesquisei o argumento 'stroke' é utilizado para alterar a largura da borda (para as formas que possuem bordas) dos ícones plotados.
+
+```{r setup, include=FALSE}
+# 3.3.1
+# Questão 6
+
+ggplot(data = mpg) + geom_point(mapping = aes(colour = displ < 5))
+
+```
+
+Mensagem de erro, porque o 'aes' requer a definição das variáveis que ficam nos eixos x e y.
+
+```{r setup, include=FALSE}
+# 3.5.1
+# Questão 1
+
+teste=mpg
+teste$varcont=rnorm(234)
+ggplot(data = teste) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ varcont, nrow = 2)
+
+```
+
+Como as variáveis que têm na base de dados são inteiras e a única numérica está sendo "utilizada" no aes, criei uma variável contínua para verificar o que acontece quando utilizamos uma variável contínua no 'facet_wrap' e o gráfico que apareceu foi esse. Demorou um pouco a aparecer e nenhuma mensagem de erro nem advertência foi dada.
 
 ## R Markdown
 
