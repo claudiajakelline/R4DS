@@ -132,7 +132,64 @@ ggplot(data = teste) +
 
 ```
 
-Como as variáveis que têm na base de dados são inteiras e a única numérica está sendo "utilizada" no aes, criei uma variável contínua para verificar o que acontece quando utilizamos uma variável contínua no 'facet_wrap' e o gráfico que apareceu foi esse. Demorou um pouco a aparecer e nenhuma mensagem de erro nem advertência foi dada.
+'facet' é uma função para ser utilizada com variáveis categóricas. Como as variáveis que têm na base de dados são inteiras e a única numérica está sendo "utilizada" no aes, criei uma variável contínua para verificar o que acontece quando utilizamos uma variável contínua no 'facet_wrap' e o gráfico que apareceu foi esse. Demorou um pouco a aparecer e nenhuma mensagem de erro nem advertência foi dada.
+
+```{r setup, include=FALSE}
+# 3.5.1
+# Questão 2
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = drv, y = cyl)) +
+  facet_grid(drv ~ cyl)
+
+```
+
+Significa que não existem observações nas respectivas categorias. Com este gráfico é possível verificar se existe relação entre as categorias das quatro variáveis plotadas.
+
+```{r setup, include=FALSE}
+# 3.5.1
+# Questão 3
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) +
+  facet_grid(. ~ cyl)
+
+```
+
+O 'facet_grid(drv ~ .)' é utilizado para plotar as categorias da variável 'drv' na horizontal. Já o comando 'facet_grid(. ~ cyl)' plota as categorias da variável 'cyl' na vertical.
+
+```{r setup, include=FALSE}
+# 3.5.1
+# Questão 4
+
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class, nrow = 2)
+
+```
+
+O 'aes' é necessário para definir as duas variáveis que devem ser plotadas e o 'facet' é utilizado para visualizar a relação entre as duas variáveis de interesse e uma ou duas outras categóricas. A vantagem do 'facet' é que é possível fazer gráficos com mais variáveis categóricas (não sei qual é a desvantagem). Acredito que com um conjunto de dados maior é possível obter mais informações/relacionar/fazer inferências sobre as variáveis que estão sendo analisadas.
+
+```{r setup, include=FALSE}
+# 3.5.1
+# Questões 5 e 6
+
+?facet_wrap
+
+```
+
+O 'nrow' e 'ncol' são utilizados para definir a quantidade de linhas e/ou colunas, respectivamente, na grade do gráfico. Sendo possível, inclusive, mexer na ordenação dos mesmos. Outros argumentos que podem ser utilizados para os painéis individuais são: scales e dir. O 'facet_grid' divide os dados em painéis individuais por uma ou duas variáveis que variam na direção horizontal e/ou vertical, enquanto 'facet_wrap' coloca os painéis próximos uns aos outros, envolvendo um certo número de colunas ou linhas. Em outras palavras, facet_wrap tem apenas uma dimensão horizontal.
+
+Para dois ou mais painéis dimensionais, o 'facet_grid' produz uma grade de gráficos com base no parâmetro (vertical ~ horizontal). Já o 'facet_wrap', apenas empilharia os painéis horizontalmente. O usuário então pode definir o layout, especificando o número de colunas ou linhas.
+
+Mas, quando quano o argumento 'scale = free' é adicionado, os painéis no 'facet_grid' seriam delimitados pela grade, sendo assim, os gráficos na mesma linha não podem ter eixos diferentes. Os eixos da coluna seguem essa mesma limitação, só pode haver um eixo simples para cada coluna. No entanto o 'facet_wrap' possibilita definir os eixos para as categorias das variáveis declaradas. Cada gráfico é exibido de forma independente, para que ele possa "liberar" o eixo x e o eixo y.
+
+Desta forma, o 'facet_grid' é útil quando se deseja comparar gráficos de mesma escala. Enquanto que o 'facet_wrap' é mais útil para variáveis e categorias que são mais independentes entre si.
+ 
 
 ## R Markdown
 
