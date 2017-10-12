@@ -1,0 +1,133 @@
+---
+title: "Chapter5_week3"
+author: "Claudia"
+date: "11 de outubro de 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+install.packages("nycflights13")
+library(nycflights13)
+library(tidyverse)
+library(dplyr)
+
+# ***************************************************************************** #
+# 5.2
+filter(flights, month == 1, day == 1)
+
+jan1 <- filter(flights, month == 1, day == 1)
+
+(dec25 <- filter(flights, month == 12, day == 25))
+
+# ----------------------------------------------------------------------------- #
+
+# ***************************************************************************** #
+# 5.2.1
+
+filter(flights, month = 1)
+#> Error: filter() takes unnamed arguments. Do you need `==`?
+
+filter(flights, month == 11 | month == 12)
+
+sqrt(2) ^ 2 == 2
+#> [1] FALSE
+
+1/49 * 49 == 1
+#> [1] FALSE
+
+near(sqrt(2) ^ 2,  2)
+#> [1] TRUE
+
+near(1 / 49 * 49, 1)
+#> [1] TRUE
+
+# ----------------------------------------------------------------------------- #
+
+# ***************************************************************************** #
+# 5.2.2
+
+# Selecionando as informações apenas para os meses 11 ou 12
+filter(flights, month == 11 | month == 12)
+
+# Outra forma de escrever o código anterior
+nov_dec <- filter(flights, month %in% c(11, 12))
+
+# Se quiser encontrar voos que nao estavam atrasados (chegada ou partida) em mais de duas horas, você pode usar qualquer um dos seguintes dois filtros:
+filter(flights, !(arr_delay > 120 | dep_delay > 120))
+filter(flights, arr_delay <= 120, dep_delay <= 120)
+
+# ----------------------------------------------------------------------------- #
+
+# ***************************************************************************** #
+# 5.2.4 Exercises
+
+# 1
+# 1.1 - Todos os voos com mais de 2 horas de atraso na chegada
+
+names(flights) # para saber o nome de todas as variaveis da base 'flights'
+filter(data = fligths, arr_delay > 120) # pq assim deu (Error in filter(data = fligths, arr_delay > 120) : object 'arr_delay' not found)esse erro?
+
+flights %>% filter(arr_delay > 120) # Neste nao deu erro
+
+# 1.2 - Voou para Houston (IAH ou HOU)
+
+flights %>% filter(dest == "IAH" | dest == "HOU")
+
+# Testando se deu certo
+a <- flights %>% filter(dest == "IAH" | dest == "HOU")
+table(a$dest)
+
+# HOU  IAH 
+#2115 7198 
+
+# 1.3 - Voos que estavam sendo operados pela "United", "American" ou "Delta"
+# O codigo para as empresas que operam os voos esta na base 'airlines'
+airlines
+# precisamos dos códigos "UA", "AA" e "DL", respectivamente
+(b <- flights %>% filter(carrier %in% c("AA", "DL", "UA")))
+
+# Testando se deu certo
+table(b$carrier)
+
+# 1.4 - Voos que partiram no verao (julho, agosto e setembro)
+(c <- flights %>% filter(month %in% c(7, 8, 9)))
+
+# Outra forma de fazer
+filter(flights, between(month, 7, 9))
+
+# Testando se deu certo
+table(c$month)
+
+# 1.5 - Voos que chegaram com mais de 2 horas de atraso, mas não sairam com atraso
+(d <- flights %>% filter(!is.na(dep_delay), dep_delay <= 0 , arr_delay > 120))
+
+# 1.6 - Voos atrasados em pelo menos uma hora, mas com mais de 30 minutos de duracao
+flights %>% filter(!is.na(dep_delay), dep_delay >= 60, dep_delay-arr_delay > 30)
+
+# 1.7 - Voos que partiram entre meia-noite e 6 da manha (inclusive)
+filter(flights, dep_time <=600 | dep_time == 2400)
+
+# ----------------------------------------------------------------------------- #
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
