@@ -109,6 +109,33 @@ flights %>% filter(!is.na(dep_delay), dep_delay >= 60, dep_delay-arr_delay > 30)
 # 1.7 - Voos que partiram entre meia-noite e 6 da manha (inclusive)
 filter(flights, dep_time <=600 | dep_time == 2400)
 
+# 2
+# 'between' é um argumento da funcao "filter" para selecionar uma variável entre 2 numeros ou 2 categorias.
+
+# 3
+filter(flights, is.na(dep_time))
+
+# ----------------------------------------------------------------------------- #
+```
+
+Existem 8.255 vôos com 'NA' na variável 'dep_time', as outras variáveis que possuem missing são: dep_delay, arr_time, arr_delay, air_time. Todas as informações sobre hora de partida e chegada, tempo de atraso (seja de partida ou chegada) e duração do vôo, estão com observações faltantes, podemos concluir que esses vôos foram cancelados.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# ***************************************************************************** #
+# 4
+NA ^ 0
+#> [1] 1
+# ----------------------------------------------------------------------------- #
+```
+Qualquer objeto elevado a 0, sempre será 1.
+'NA | TRUE' sempre será 'TRUE' porque não importa se o valor faltante é verdadeiro ou falso, 'x' ou TRUE para todos os valores de x. De forma análoga, '"qualquer coisa" & FALSE' sempre será Falso! Já nas condições 'NA | FALSE', 'NA & TRUE' e 'NA * 0', o valor faltante importa e os resultados serão 'NA'. A razão para a condição 'NA * 0' ser NA é que se o valor faltante for - inf ou + inf, '-(+)inf*0 == NaN'.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# ***************************************************************************** #
+# 5.4.1
+
 # ----------------------------------------------------------------------------- #
 ```
 
